@@ -1,5 +1,8 @@
 package sec.project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +29,18 @@ public class SignupController {
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String submitForm(@RequestParam String name, @RequestParam String address) {
+        if (name.isEmpty() || address.isEmpty()) {
+            return "redirect:/form";
+        }
         signupRepository.save(new Signup(name, address));
+        return "redirect:/done";
+    }
+    @RequestMapping(value="/done")
+    public String done(Model model) {
+        long i = signupRepository.count();
+        List<Signup> list = new ArrayList<>();
+        list = signupRepository.findAll();
+        model.addAttribute("people", list);
         return "done";
     }
 

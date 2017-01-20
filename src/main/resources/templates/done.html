@@ -6,6 +6,16 @@
     <body>
 
         <h1>Thank you! You have been signed up to the event!</h1>
+        <br />
+            <h2>
+                List of participants.
+            </h2>
+            <ul th:each="signed : ${people}">
+                <li>
+                    <span th:text="${signed.Name}">Hi</span>
+                    <span th:text="${signed.address}">address</span>
+                </li>
+            </ul>
 
     </body>
 </html>
